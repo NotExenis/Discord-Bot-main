@@ -2,7 +2,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { Client, Collection, GatewayIntentBits } = require('discord.js');
 const { token } = require('./config.json');
-const { mongodbToken } = require('./config.json');
+const { databaseToken } = require('./config.json');
+const { connect } = require('mongoose');
 
 const client = new Client({ intents: [GatewayIntentBits.Guilds] });
 
@@ -38,3 +39,6 @@ for (const file of eventFiles) {
 }
 
 client.login(token);
+(async () => {
+	await connect(databaseToken).catch(console.error);
+})();
