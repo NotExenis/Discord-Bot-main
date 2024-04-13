@@ -5,16 +5,16 @@ module.exports = {
         .setName("counter")
         .setDescription("See how many times a word has been used.")
         .addStringOption((option) =>
-            option.setName("nigger")
+            option.setName("word")
             .setDescription("What word are you looking for?")
             .setRequired(true)
         ),
         async execute(interaction) {
-        let option = interaction.options.get("nigger").value;
+        let option = interaction.options.get("word").value;
         let word = option.toLowerCase();
         let count = 0;
     
-        let messages = await interaction.channel.messages.fetch({ limit: 100 });
+        let messages = await interaction.channel.messages.fetch({ limit: 1000 });
         messages.forEach(async (message) => {
             if (message.content.toLowerCase().includes(word)) {
                 count++;
