@@ -1,20 +1,26 @@
 const fs = require('fs');
+const path = require('path');
 
 module.exports = (client) => {
     client.handleEvents = async () => {
-        const eventFolders = fs.readdirSync('./src/events/');
+        const mongoFolderPath = path.join(__dirname, '..', 'mongo');
+        const eventFolders = fs.readdirSync(mongoFolderPath);
         for (const folder of eventFolders) {
-            const eventFiles = fs.readdirSync(`./src/events/${folder}` ).filter((file) => file.endsWith('.js'));
+            const eventFilesPath = path.join(mongoFolderPath, folder);
+            const eventFiles = fs.readdirSync(eventFilesPath).filter((file) => file.endsWith('.js'));
             switch (folder) {
                 case 'mongo':
                     for (const file of eventFiles) {
-                        const event = require(`../../events/${folder}/${file}`);
+                        // Construct the path to the event file
+                        const eventFilePath = path.join(eventFilesPath, file);
+                        const event = require(eventFilePath);
                         if(event.once){
-                            connection.once(event.name,(...args) => event.execute(client,...args));
+                            connection.once(event.name, (...args) => event.execute(client, ...args));
                         } else {
-                            connection.on(event.name,(...args) => event.execute(client,...args));
+                            connection.on(event.name, (...args) => event.execute(client, ...args));
                         }
-                    } break;
+                    }
+                    break;
             }
         }
     }
