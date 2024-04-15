@@ -1,32 +1,33 @@
-const Guild = require('../../schemas/count');
+const Count = require('../../schemas/count');
 const { SlashCommandBuilder } = require('discord.js');
-const mongoose = require('mongoose');
 
 module.exports = {
     data: new SlashCommandBuilder()
-       .setName('Add')
-       .setDescription('Adds a count to a user')
-       .addUserOption((option) =>
-       option.setName('user')
-       .setDescription('Who do you want to add a count to?')
-       .setRequired(true)
-        ),
+        .setName('add')
+        .setDescription('Adds a count to a user')
+        .addUserOption(option =>
+            option.setName('user')
+                .setDescription('Who do you want to add a count to?')
+                .setRequired(true)),
 
-        async execute(interaction){
-        let guildMember = await Guild.findOne({ memberid: interaction.memberid }).catch(e => console.log(e));
-        if(!guildMember) {
-            guildMember = await new Count({
-                guildId: interaction.guild.id,
-                guildName: interaction.guild.name,
-                guildMember: interaction.guildMember.id,
-                guildMemberCount: 1,
-                guildMemberURL: interaction.user.avatarURL(),
-            });
+    async execute(interaction) {
+        const userId = interaction.options.getUser('user')?.id;
 
-            await guildMember.save().catch(e => console.log(e));
+        try {
+            let count = await Count.findOne({ userId });
+            
+            if (!count) {
+                count = new Count({ userId, amount: 1 });
+            } else {
+                count.amount += 1;
+            }
 
+            await count.save();
+
+            await interaction.reply({ content: `Added N-Word count for ${interaction.options.getUser('user').tag}` });
+        } catch (error) {
+            console.error(error);
+            await interaction.reply({ content: 'An error occurred while processing your command.', ephemeral: true });
         }
-
-
-    }
-}
+    },
+};
