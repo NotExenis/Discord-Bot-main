@@ -19,14 +19,14 @@ module.exports = {
       let count = await Count.findOne({ userId });
 
       if (!count) {
-        count = new Count({ userId, amount: 1 });
+        count = new Count({ userId, guildId, amount: 1 });
       } else {
         count.amount += 1;
       }
 
       await count.save();
 
-      const topUsers = await Count.find().sort({ amount: -1 }).limit(10);
+      const topUsers = await Count.find({guildId}).sort({ amount: -1 }).limit(10);
 
       const embed = new EmbedBuilder()
         .setTitle("N-word Counts")

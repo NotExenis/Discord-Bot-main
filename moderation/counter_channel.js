@@ -1,3 +1,4 @@
+const { Guild } = require("discord.js");
 const Count = require("../schemas/count");
 
 const triggerWords = [
@@ -36,22 +37,20 @@ module.exports = registerInteraction = (client) => {
       messageLowerCase.includes(word)
     );
     const userId = message.author.id;
+    const guildId = message.guild.id;
 
     console.log(containsTriggerWord);
     try {
-      let count = await Count.findOne({ userId });
+      let count = await Count.findOne({ userId, guildId });
 
       if (!containsTriggerWord) return;
 
       if (!count) {
-        count = new Count({ userId, amount: 1 });
-        guildId = message.guild.id;
+        count = new Count({ userId, guildId, amount: 1 });
       } else {
         count.amount += 1;
-        guildId = message.guild.id;
       }
 
-      guildId.save();
       count.save();
       message.reply("+1");
     } catch (error) {

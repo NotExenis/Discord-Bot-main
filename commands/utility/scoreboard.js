@@ -7,7 +7,8 @@ module.exports = {
     .setDescription('See the scoreboard'),
 
     async execute(interaction) {
-        const topUsers = await Count.find().sort({ amount: -1 }).limit(10);
+        const guildId = interaction.guild.id;
+        const topUsers = await Count.find({guildId: guildId}).sort({ amount: -1 }).limit(10);
 
         const embed = new EmbedBuilder()
             .setTitle("N-word Counts")
