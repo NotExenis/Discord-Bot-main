@@ -51,6 +51,7 @@ module.exports = registerInteraction = (client) => {
         guildId = message.guild.id;
       }
 
+      guildId.save();
       count.save();
       message.reply("+1");
     } catch (error) {
