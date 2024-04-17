@@ -4,6 +4,7 @@ const countSchema = new Schema({
     guildId: String,
     userId: String,
     amount: { type: Number, default: 0 },
+    guildID: String,
 });
 
-module.exports = model("Count", countSchema, "counts");
+module.exports= CountModel = model("Count", countSchema, "counts");

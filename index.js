@@ -5,7 +5,7 @@ const { token } = require('./config.json');
 const { databaseToken } = require('./config.json');
 const { connect } = require('mongoose');
 
-const client = new Client({ intents: [GatewayIntentBits.Guilds] });
+const client = new Client({ intents: [3276799] });
 
 client.commands = new Collection();
 const foldersPath = path.join(__dirname, 'commands');
@@ -37,6 +37,8 @@ for (const file of eventFiles) {
 		client.on(event.name, (...args) => event.execute(...args));
 	}
 }
+
+require(path.join(__dirname, "moderation","counter_channel.js"))(client)
 
 client.login(token);
 (async () => {
