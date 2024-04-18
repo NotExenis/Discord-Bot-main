@@ -14,9 +14,10 @@ module.exports = {
 
   async execute(interaction) {
     const userId = interaction.options.getUser("user").id;
+    const guildId = interaction.guildId;
 
     try {
-      let count = await Count.findOne({ userId });
+      let count = await Count.findOne({ userId, guildId });
 
       if (!count) {
         count = new Count({ userId, guildId, amount: 1 });
