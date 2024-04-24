@@ -2,30 +2,7 @@ const { Guild } = require("discord.js");
 const Count = require("../schemas/count");
 
 const triggerWords = [
-  "nigger",
-  "niggers",
-  "nigga",
-  "nig",
-  "nigg",
-  "nga",
-  "nigge",
-  "nig",
-  "niglet",
-  "niggerboy",
-  "niggerboi",
-  "n1gga",
-  "nibb",
-  "nibber",
-  "nibbaloo",
-  "nibler",
-  "nibja",
-  "nibba",
-  "harry",
-  "nicget",
-  "nickher",
-  "niccher",
-  "nicker",
-  "nigier",
+  "exampleWords",
 ];
 
 module.exports = registerInteraction = (client) => {
