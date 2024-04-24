@@ -12,7 +12,7 @@ module.exports = {
 
         const embed = new EmbedBuilder()
             .setTitle("N-word Counts")
-            .setDescription("Show the top 10 users with the most N-Word counts")
+            .setDescription("Show the top 10 users")
             .setColor('Blue')
         
             const fields = [];
