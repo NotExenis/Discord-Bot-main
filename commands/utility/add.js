@@ -8,7 +8,7 @@ module.exports = {
     .addUserOption((option) =>
       option
         .setName("user")
-        .setDescription("Who do you want to add a N-Word count to?")
+        .setDescription("Who do you want to add a count to?")
         .setRequired(true)
     ),
 
@@ -31,7 +31,7 @@ module.exports = {
 
       const embed = new EmbedBuilder()
         .setTitle("N-word Counts")
-        .setDescription("Users with the most N-Word counts")
+        .setDescription("Users with the most counts")
         .setColor("Blue");
 
       const fields = [];
