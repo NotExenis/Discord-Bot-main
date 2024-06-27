@@ -30,7 +30,7 @@ module.exports = {
       const topUsers = await Count.find({guildId}).sort({ amount: -1 }).limit(10);
 
       const embed = new EmbedBuilder()
-        .setTitle("N-word Counts")
+        .setTitle("Counts")
         .setDescription("Users with the most counts")
         .setColor("Blue");
 
